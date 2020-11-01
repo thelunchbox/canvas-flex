@@ -14,8 +14,8 @@ Aside from *most* of the standard functions of canvas, the renderer offers a few
 #### Additional Functions
 * reset() - clears the entire canvas.
 * loadImage(name, filepath) - loads an image from the filepath into the internal IMAGE_CACHE by a reference name. (asyncronous, returns a promise)
-* checkImageLoaded(name) - checks if a sprite has finished loading.
-* clearImageCache() - clears the internal sprite IMAGE_CACHE.
+* checkImageLoaded(name) - checks if an image has finished loading.
+* clearImageCache() - clears the internal IMAGE_CACHE.
 * drawCachedImage(name, ...args) - pulls an image from the internal IMAGE_CACHE and draws it using `context.drawImage()`, passing the rest of the `...args` through.
 * applySettings(settings) - applies the values of each supplied context property to the renderer.
 * path([settings, ]actions) - wraps the `actions` callback in a begin/closePath pseudo-block. If the optional `settings` are passed in, they are applied within the block before the actions are called.
@@ -29,6 +29,7 @@ Aside from *most* of the standard functions of canvas, the renderer offers a few
 * strokeAndFillCircle(x, y, radius) - creates an outlined circle.
 * strokeAndFillRect(x, y, width, height) - creates an outlined rectangle.
 * drawParagraph(text, x, y, width, stroke = false) - auto-wraps the text at `width`, and optionally applies a stroke to the text if `stroke` is `true`.
+* mask(drawMask) - accepts a function `drawMask`, and everything isolated to the current scope will only be drawn to the canvas if it overlaps with the shapes drawn in the `drawMask` function.
 
 ##### Path Drawing
 The following functions take in an array of points in the format `{x, y}` and an optional `options` object.

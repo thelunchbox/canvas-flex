@@ -192,7 +192,7 @@ class Renderer {
     });
   }
 
-  animatePath(points, frame, options) {
+  animatePath(points, frame, options = {}) {
     const { wrap = false, length = points.length, repeat = false } = options;
     const start = Math.round(wrap ? frame % points.length : 0);
     const end = Math.round(wrap ? start + length : repeat ? frame % (length + 1) : Math.min(length, frame));
@@ -204,19 +204,19 @@ class Renderer {
     this.context.stroke();
   }
 
-  fillPath(points, options) {
+  fillPath(points, options = {}) {
     const { close = true } = options;
     this.drawPath(points, close);
     this.context.fill();
   }
 
-  strokePath(points, options) {
+  strokePath(points, options = {}) {
     const { close = false } = options;
     this.drawPath(points, close);
     this.context.stroke();
   }
 
-  strokeAndFillPath(points, options) {
+  strokeAndFillPath(points, options = {}) {
     const { close = true } = options;
     this.drawPath(points, close);
     this.context.stroke();
@@ -259,6 +259,12 @@ class Renderer {
     props.forEach(prop => {
       this[prop] = settings[prop];
     });
+  }
+  
+  mask(drawMask) {
+    this.globalCompositeOperation = 'destination-in';
+    drawMask();
+    this.globalCompositeOperation = 'source-over';
   }
 
   path(arg1, arg2) {
