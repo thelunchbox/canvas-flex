@@ -193,15 +193,23 @@ class Renderer {
   }
 
   animatePath(points, frame, options = {}) {
-    const { wrap = false, length = points.length, repeat = false } = options;
+    const { wrap = false, length = points.length, repeat = false, fade = false } = options;
     const start = Math.round(wrap ? frame % points.length : 0);
     const end = Math.round(wrap ? start + length : repeat ? frame % (length + 1) : Math.min(length, frame));
     if (start == end) return;
 
     const src = wrap ? [...points, ...points] : [...points];
     const usePoints = src.slice(start, end);
-    this.drawPath(usePoints, false);
-    this.context.stroke();
+    if (fade) {
+      usePoints.forEach((current, i) => {
+        const next = usePoints[i + 1];
+        if (!next) return;
+        this.isolatePath({ globalAlpha: 1 - (i / usePoints) }, () => this.strokePath([current, next]));
+      });
+    } else {
+      this.drawPath(usePoints, false);
+      this.context.stroke();
+    }
   }
 
   fillPath(points, options = {}) {

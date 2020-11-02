@@ -42,6 +42,7 @@ Currently there is only one option - `close`: set to `true` if you want the clos
     * `repeat` - if set to true, this will repeat the entire animation from start once it completes
     * `wrap` - overrides `repeat` if set to true, and loops the animation with the specified length
     * `length` - defaults to the length of the array - this is the maximum number of frames to animate
+    * `fade` - if set to true, this will fade the path as it is drawn
 
 ##### Special Animations
 * oscillateText(text, x, y, frame, options) - creates text that oscillates per character. The text will have an effect of looking like a flag waving. This will use the current textAlign and textBaseline settings. For this function, there are four options:
