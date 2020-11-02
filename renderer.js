@@ -204,7 +204,7 @@ class Renderer {
       usePoints.forEach((current, i) => {
         const next = usePoints[i + 1];
         if (!next) return;
-        this.isolatePath({ globalAlpha: 1 - (i / usePoints) }, () => this.strokePath([current, next]));
+        this.isolatePath({ globalAlpha: (i / usePoints.length) }, () => this.strokePath([current, next]));
       });
     } else {
       this.drawPath(usePoints, false);
