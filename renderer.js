@@ -362,6 +362,44 @@ class Renderer {
     this.strokeRect(x, y, width, height);
     this.fillRect(x, y, width, height);
   }
+
+  drawRoundedRect(x, y, width, height, radius) {
+    this.translate(x, y);
+    const r = Math.min(radius, width / 2, height / 2);
+    const w = width - 2 * r;
+    const h = height - 2 * r;
+    this.moveTo(r, 0);
+    this.lineTo(r + w, 0);
+    this.arc(r + w, r, r, Math.PI * 3 / 2, Math.PI * 2);
+    this.lineTo(width, r + h);
+    this.arc(r + w, r + h, r, 0, Math.PI / 2);
+    this.lineTo(r, height);
+    this.arc(r, r + h, r, Math.PI / 2, Math.PI);
+    this.lineTo(0, r);
+    this.arc(r, r, Math.PI, Math.PI * 3 / 2);
+  }
+
+  strokeRoundedRect(x, y, width, height, radius) {
+    this.isolatePath(() => {
+      this.drawRoundedRect(x, y, width, height, radius);
+      this.stroke();
+    });
+  }
+
+  fillRoundedRect(x, y, width, height, radius) {
+    this.isolatePath(() => {
+      this.drawRoundedRect(x, y, width, height, radius);
+      this.fill();
+    });
+  }
+
+  strokeAndFillRoundedRect(x, y, width, height, radius) {
+    this.isolatePath(() => {
+      this.drawRoundedRect(x, y, width, height, radius);
+      this.stroke();
+      this.fill();
+    });
+  }
 }
 
 let renderer = null;
