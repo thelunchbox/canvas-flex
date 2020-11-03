@@ -212,16 +212,16 @@ class Renderer {
   strokePath(points, options = {}) {
     const { close = false, fade = false } = options;
     if (fade) {
-      usePoints.forEach((current, i) => {
-        let next = usePoints[i + 1];
+      points.forEach((current, i) => {
+        let next = points[i + 1];
         if (!next) {
           if (!close) {
             return;
           } else {
-            next = usePoints[0];
+            next = points[0];
           }
         }
-        this.isolatePath({ globalAlpha: (i / usePoints.length) }, () => this.strokePath([current, next]));
+        this.isolatePath({ globalAlpha: (i / points.length) }, () => this.strokePath([current, next]));
       });
     } else {
       this.drawPath(points, close);
