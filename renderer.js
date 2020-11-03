@@ -376,7 +376,7 @@ class Renderer {
     this.lineTo(r, height);
     this.arc(r, r + h, r, Math.PI / 2, Math.PI);
     this.lineTo(0, r);
-    this.arc(r, r, Math.PI, Math.PI * 3 / 2);
+    this.arc(r, r, r, Math.PI, Math.PI * 3 / 2);
   }
 
   strokeRoundedRect(x, y, width, height, radius) {
