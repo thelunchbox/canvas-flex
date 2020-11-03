@@ -200,16 +200,7 @@ class Renderer {
 
     const src = wrap ? [...points, ...points] : [...points];
     const usePoints = src.slice(start, end);
-    if (fade) {
-      usePoints.forEach((current, i) => {
-        const next = usePoints[i + 1];
-        if (!next) return;
-        this.isolatePath({ globalAlpha: (i / usePoints.length) }, () => this.strokePath([current, next]));
-      });
-    } else {
-      this.drawPath(usePoints, false);
-      this.context.stroke();
-    }
+    this.strokePath(usePoints, { fade });
   }
 
   fillPath(points, options = {}) {
@@ -219,9 +210,23 @@ class Renderer {
   }
 
   strokePath(points, options = {}) {
-    const { close = false } = options;
-    this.drawPath(points, close);
-    this.context.stroke();
+    const { close = false, fade = false } = options;
+    if (fade) {
+      usePoints.forEach((current, i) => {
+        let next = usePoints[i + 1];
+        if (!next) {
+          if (!close) {
+            return;
+          } else {
+            next = usePoints[0];
+          }
+        }
+        this.isolatePath({ globalAlpha: (i / usePoints.length) }, () => this.strokePath([current, next]));
+      });
+    } else {
+      this.drawPath(points, close);
+      this.context.stroke();
+    }
   }
 
   strokeAndFillPath(points, options = {}) {
@@ -268,7 +273,7 @@ class Renderer {
       this[prop] = settings[prop];
     });
   }
-  
+
   mask(drawMask) {
     this.globalCompositeOperation = 'destination-in';
     drawMask();
